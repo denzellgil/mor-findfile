@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: find files bigger than 100 mb
+      find:
+        paths: /
+        file_type: file
+        size: 100m
+        recurse: yes
+      register: output
+
+    - debug: var=item.path
+      with_items: "{{ output.files }}"
